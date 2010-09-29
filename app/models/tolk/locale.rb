@@ -13,6 +13,7 @@ module Tolk
       'dsb'   => 'Lower Sorbian',
       'el'    => 'Greek',
       'en'    => 'English',
+      'en-US' => 'English (US)',
       'es'    => 'Spanish',
       'et'    => 'Estonian',
       'fa'    => 'Persian',
