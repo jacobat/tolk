@@ -20,7 +20,10 @@
 <body>
   <div id="container">
     <div id="head">
-      <h1><span class="home"><%= link_to "Tolk", tolk.root_path %></span><%= yield :locale %></h1>
+      <h1><span class="home"><%= link_to "Tolk", tolk_root_path %></span><%= yield :locale %></h1>
+      <% flash.each do |key, message| %>
+        <span class="flash"><%= message %></span>
+      <% end %>
     </div>
     <%= yield %>
   </div>
