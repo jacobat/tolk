@@ -112,6 +112,11 @@ div#head span.note {
   margin-left: 10px;
 }
 
+div#head span.flash {
+  float: right;
+  margin-top: -20px;
+}
+
 h2,
 h3 {
   font-size: 18px;
