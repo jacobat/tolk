@@ -1,5 +1,3 @@
-Mime::Type.register_alias "text/yaml", :yml
-
 $KCODE = 'UTF8'
 begin
   require 'ya2yaml'
