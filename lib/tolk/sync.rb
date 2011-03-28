@@ -11,13 +11,13 @@ module Tolk
 
       def load_translations
         I18n.available_locales # force load
-        translations = flat_hash(I18n.backend.send(:translations)[primary_locale.name.to_sym])
+        translations = flat_hash(I18n.backend.send(:translations)[primary_locale_name.to_sym])
         filter_out_i18n_keys(translations.merge(read_primary_locale_file))
       end
 
       def read_primary_locale_file
         primary_file = "#{self.locales_config_path}/#{self.primary_locale_name}.yml"
-        File.exists?(primary_file) ? flat_hash(YAML::load(IO.read(primary_file))[self.primary_locale_name]) : {}
+        File.exists?(primary_file) ? flat_hash(YAML::load(IO.read(primary_file))[primary_locale_name.to_s]) : {}
       end
 
       def flat_hash(data, prefix = '', result = {})
@@ -55,8 +55,7 @@ module Tolk
             # Set the primary updated flag if the primary translation has changed and it is not a new record.
             secondary_locales.each do |locale|
               if existing_translation = existing_phrase.translations.detect {|t| t.locale_id == locale.id }
-                existing_translation.force_set_primary_update = true
-                existing_translation.save!
+                existing_translation.update_attribute(:force_set_primary_update, true)
               end
             end
           end
