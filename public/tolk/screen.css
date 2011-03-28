@@ -166,7 +166,7 @@ ul.locales a {
   border-color: #ccc;
 }*/
 
-ul.locales span.missing_translations {
+ul.locales span.missing_translations, ul.locales span.updated_translations {
   color: #fff;
   font-weight: bold;
   background: #c00;
@@ -178,6 +178,10 @@ ul.locales span.missing_translations {
   line-height: 9px;
   vertical-align: top;
   display: inline-block;
+}
+
+ul.locales span.updated_translations {
+  background: #fa0;
 }
 
 ul.locales span {

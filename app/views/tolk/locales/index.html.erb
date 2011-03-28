@@ -9,12 +9,16 @@
         <%= link_to locale.language_name, locale %>
         <% missing_count = locale.count_phrases_without_translation %>
         <% if missing_count > 0 %>
-          <span class="missing_translations"><%= locale.count_phrases_without_translation %></span>
+          <span class="missing_translations" title="New translations"><%= missing_count %></span>
+        <% end %>
+        <% updated_count = locale.phrases_with_updated_translation.size %>
+        <% if updated_count > 0 %>
+          <span class="updated_translations" title="Updated translations"><%= updated_count %></span>
         <% end %>
       </li>
     <% end %>
   </ul>
-  
+
 <% else %>
   <p>No locales yet.</p>
 
