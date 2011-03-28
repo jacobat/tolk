@@ -21,12 +21,12 @@
     <div id="head">
       <h1><span class="home"><%= link_to "Tolk", tolk_root_path %></span><%= yield :locale %></h1>
       <% flash.each do |key, message| %>
-        <span class="flash"><%= message %></span>
+        <span class="flash <%= key.to_s -%>"><%= message -%></span>
       <% end %>
     </div>
     <%= yield %>
   </div>
-  
+
   <script type="text/javascript">
     $$('td textarea').each(function(element) {
       element.setStyle({height: element.up('td').measure('height')+'px'});

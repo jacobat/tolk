@@ -117,6 +117,14 @@ div#head span.flash {
   margin-top: -20px;
 }
 
+span.flash.error {
+  color: #f00;
+}
+
+span.flash.success {
+  color: #2FADCF;
+}
+
 h2,
 h3 {
   font-size: 18px;

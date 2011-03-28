@@ -6,7 +6,7 @@ module Tolk
     def index
       @locales = Tolk::Locale.secondary_locales
     end
-  
+
     def show
       respond_to do |format|
         format.html do
@@ -20,6 +20,11 @@ module Tolk
     def update
       @locale.translations_attributes = params[:translations]
       @locale.save
+      if @locale.translation_errors && @locale.translation_errors > 0
+        flash[:error] = "#{@locale.translation_errors} translation could not be saved"
+      else
+        flash[:success] = 'Locales successfully updated.'
+      end
       redirect_to request.referrer
     end
 

@@ -56,6 +56,8 @@ module Tolk
     accepts_nested_attributes_for :translations, :reject_if => proc { |attributes| attributes['text'].blank? }
     before_validation :remove_invalid_translations_from_target, :on => :update
 
+    attr_accessor :translation_errors
+
     cattr_accessor :locales_config_path
     self.locales_config_path = "#{Rails.root}/config/locales"
 
@@ -153,14 +155,14 @@ module Tolk
         self.translations.containing_text(query)
       end
 
-      phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')      
+      phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
       phrases = phrases.scoped(:conditions => ['tolk_phrases.id IN(?)', translations.map(&:phrase_id).uniq])
       phrases.paginate({:page => page}.merge(options))
     end
-    
+
     def search_phrases_without_translation(query, page = nil, options = {})
       return phrases_without_translation(page, options) unless query.present?
-      
+
       phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
 
       found_translations_ids = Tolk::Locale.primary_locale.translations.all(:conditions => ["tolk_translations.text LIKE ?", "%#{query}%"], :select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
@@ -202,7 +204,7 @@ module Tolk
     end
 
     def translations_with_html
-      translations = self.translations.all(:conditions => "tolk_translations.text LIKE '%>%' AND 
+      translations = self.translations.all(:conditions => "tolk_translations.text LIKE '%>%' AND
         tolk_translations.text LIKE '%<%' AND tolk_phrases.key NOT LIKE '%_html'", :joins => :phrase)
       Translation.send :preload_associations, translations, :phrase
       translations
@@ -214,6 +216,8 @@ module Tolk
       self.translations.proxy_target.each do |t|
         unless t.valid?
           self.translations.proxy_target.delete(t)
+          @translation_errors = 0 unless @translation_errors
+          @translation_errors += 1
         else
           t.updated_at = Time.current # Silly hax to fool autosave into saving the record
         end
