@@ -24,6 +24,8 @@ module Tolk
     attr_accessor :explicit_nil
     before_validation :set_explicit_nil
 
+    before_validation :strip_whitespaces
+
     def up_to_date?
       not out_of_date?
     end
@@ -76,6 +78,10 @@ module Tolk
         self.text = nil
         self.explicit_nil = true
       end
+    end
+
+    def strip_whitespaces
+      self.text.strip!
     end
 
     def fix_text_type
