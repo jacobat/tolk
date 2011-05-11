@@ -48,6 +48,7 @@ module Tolk
       'tr'    => 'Turkish',
       'uk'    => 'Ukrainian',
       'vi'    => 'Vietnamese',
+      'xx'    => 'Development Master',
       'zh'    => 'Chinese'
     }
 
