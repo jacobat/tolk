@@ -81,7 +81,7 @@ module Tolk
     end
 
     def strip_whitespaces
-      self.text.strip!
+      self.text.strip! if self.text.is_a?(String)
     end
 
     def fix_text_type
