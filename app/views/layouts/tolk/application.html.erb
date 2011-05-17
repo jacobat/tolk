@@ -31,6 +31,16 @@
     $$('td textarea').each(function(element) {
       element.setStyle({height: element.up('td').measure('height')+'px'});
     });
+
+    $$('a.copy-from-original').each(function(element) {
+      element.observe('click', function(event) {
+        var primary_translation = element.up().next('td.phrase').down('span.value').innerText;
+        var translation_area = element.previous('textarea');
+        translation_area.setValue(primary_translation);
+        translation_area.focus();
+        return false;
+      });
+    });
   </script>
 </body>
 </html>

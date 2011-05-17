@@ -254,6 +254,11 @@ table.translations div.updated span.key {
   padding: 0;
 }
 
+a.copy-from-original {
+  font-size: 10px;
+  text-decoration: none;
+}
+
 /*-------------------------------------------------
 Translation tables
 -------------------------------------------------*/

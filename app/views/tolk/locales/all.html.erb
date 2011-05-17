@@ -14,7 +14,7 @@
 <div class="translations">
 <% if @phrases.any? %>
   <%= form_for @locale do |locale_form| %>
-        <table class="translations">
+    <table class="translations">
       <tr>
         <th class="translation"><%= @locale.language_name -%></th>
         <th class="key"><%= Tolk::Locale.primary_language_name -%></th>
@@ -27,20 +27,24 @@
               <%= hidden_field_tag :"translations[][locale_id]", phrase.translation.locale_id %>
               <%= text_area_tag :"translations[][text]", format_i18n_text_area_value(phrase.translation.text).force_encoding('utf-8'), :class => 'locale',
                                 :onfocus => "$(this).up('tr').addClassName('active');", :onblur => "$(this).up('tr').removeClassName('active');" %>
+              <a class="copy-from-original" href="javascript:void(0);">copy text from original</a>
             </td>
             <td class="phrase">
-
               <% if action_name == 'updated' %>
                 <div class="updated">
                   <span class="key">Updated</span>
-                  <%= format_i18n_value(phrase.translations.primary.text) -%>
+                  <span class="value">
+                    <%= format_i18n_value(phrase.translations.primary.text) -%>
+                  </span>
                 </div>
                 <div class="original">
                   <span class="key">Original</span>
                   <%= format_i18n_value(phrase.translations.primary.previous_text) -%>
                 </div>
               <% else %>
-                <%= format_i18n_value(phrase.translations.primary.text) -%>
+                <span class="value">
+                  <%= format_i18n_value(phrase.translations.primary.text) -%>
+                </span>
               <% end %>
 
               <span class="key"><%= phrase.key %></span>
