@@ -1,5 +1,5 @@
 module Tolk
-  class Phrase < ActiveRecord::Base
+  class Phrase < Base
     set_table_name "tolk_phrases"
 
     validates_uniqueness_of :key
