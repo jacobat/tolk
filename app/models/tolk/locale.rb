@@ -1,5 +1,5 @@
 module Tolk
-  class Locale < ActiveRecord::Base
+  class Locale < Base
     set_table_name "tolk_locales"
 
     MAPPING = {
