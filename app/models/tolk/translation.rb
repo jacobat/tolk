@@ -1,5 +1,5 @@
 module Tolk
-  class Translation < ActiveRecord::Base
+  class Translation < Base
     set_table_name "tolk_translations"
 
     scope :containing_text, lambda {|query| where("tolk_translations.text LIKE ?", "%#{query}%") }
