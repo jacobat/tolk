@@ -1,1 +1,1 @@
-gem 'will_paginate', :git => 'http://github.com/mislav/will_paginate.git', :branch => 'rails3'
+gem 'rails', '>= 3.2.0'
