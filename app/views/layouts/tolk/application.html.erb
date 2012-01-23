@@ -9,17 +9,17 @@
   <% if respond_to?(:sprockets_include_tag) %>
     <%= sprockets_include_tag %>
   <% else %>
-    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "assets/tolk" %>
   <% end %>
 
-  <%= stylesheet_link_tag "/tolk/reset", "/tolk/screen" %>
+  <%= stylesheet_link_tag "assets/tolk" %>
   <%= yield :head %>
 </head>
 
 <body>
   <div id="container">
     <div id="head">
-      <h1><span class="home"><%= link_to "Tolk", tolk_root_path %></span><%= yield :locale %></h1>
+      <h1><span class="home"><%= link_to "Tolk", root_path %></span><%= yield :locale %></h1>
     </div>
     <%= yield %>
   </div>
