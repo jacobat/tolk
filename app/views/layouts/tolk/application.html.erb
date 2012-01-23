@@ -9,10 +9,10 @@
   <% if respond_to?(:sprockets_include_tag) %>
     <%= sprockets_include_tag %>
   <% else %>
-    <%= javascript_include_tag "assets/tolk" %>
+    <%= javascript_include_tag "/assets/tolk" %>
   <% end %>
 
-  <%= stylesheet_link_tag "assets/tolk" %>
+  <%= stylesheet_link_tag "/assets/tolk" %>
   <%= yield :head %>
 </head>
 
