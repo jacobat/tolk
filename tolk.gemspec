@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
 
-  s.files = Dir['README', 'MIT-LICENSE', 'config/routes.rb', 'init.rb', 'lib/**/*', 'app/**/*', 'public/tolk/**/*']
+  s.files = Dir['README', 'MIT-LICENSE', "config/*", 'lib/**/*', 'app/**/*', 'public/tolk/**/*']
   s.has_rdoc = false
 
   s.require_path = 'lib'
