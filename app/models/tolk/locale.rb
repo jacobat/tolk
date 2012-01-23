@@ -194,6 +194,8 @@ module Tolk
       if phrase = Tolk::Phrase.find_by_key(key)
         t = self.translations.find_by_phrase_id(phrase.id)
         t.text if t
+      else
+        super
       end
     end
 
