@@ -7,6 +7,14 @@ namespace :tolk do
     Rake::Task['tolk:sync'].invoke
     Rake::Task['tolk:import'].invoke
   end
+
+
+  desc "Delete all locales, translations and phrases (for developing purpose)"
+  task :clean_all => :environment do
+    Tolk::Locale.delete_all
+    Tolk::Translation.delete_all
+    Tolk::Phrase.delete_all
+  end
   
   desc "Sync Tolk with the default locale's yml file"
   task :sync => :environment do
