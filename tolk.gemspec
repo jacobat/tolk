@@ -13,5 +13,8 @@ Gem::Specification.new do |s|
   s.files = Dir['README', 'MIT-LICENSE', "config/*", 'lib/**/*', 'app/**/*', 'public/tolk/**/*']
   s.has_rdoc = false
 
+  s.add_dependency("will_paginate", ">= 3.0.0")
+  s.add_dependency("ya2yaml", ">= 0.30.0")
+
   s.require_path = 'lib'
 end
