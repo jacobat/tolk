@@ -134,9 +134,7 @@ module Tolk
       existing_ids = self.translations.all(:select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
       phrases = phrases.scoped(:conditions => ['tolk_phrases.id NOT IN (?)', existing_ids]) if existing_ids.present?
 
-      result = phrases.paginate({:page => page}.merge(options))
-      Tolk::Phrase.send :preload_associations, result, :translations
-      result
+      phrases.paginate({:page => page}.merge(options))
     end
 
     def search_phrases(query, scope, page = nil, options = {})
@@ -163,9 +161,7 @@ module Tolk
       existing_ids = self.translations.all(:select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
       phrases = phrases.scoped(:conditions => ['tolk_phrases.id NOT IN (?) AND tolk_phrases.id IN(?)', existing_ids, found_translations_ids]) if existing_ids.present?
 
-      result = phrases.paginate({:page => page}.merge(options))
-      Tolk::Phrase.send :preload_associations, result, :translations
-      result
+      phrases.paginate({:page => page}.merge(options))
     end
 
     def to_hash
@@ -200,18 +196,16 @@ module Tolk
     end
 
     def translations_with_html
-      translations = self.translations.all(:conditions => "tolk_translations.text LIKE '%>%' AND 
+      self.translations.all(:conditions => "tolk_translations.text LIKE '%>%' AND 
         tolk_translations.text LIKE '%<%' AND tolk_phrases.key NOT LIKE '%_html'", :joins => :phrase)
-      Translation.send :preload_associations, translations, :phrase
-      translations
     end
 
     private
 
     def remove_invalid_translations_from_target
-      self.translations.proxy_target.each do |t|
+      self.translations.each do |t|
         unless t.valid?
-          self.translations.proxy_target.delete(t)
+          self.translations.delete(t)
         else
           t.updated_at = Time.current # Silly hax to fool autosave into saving the record
         end
@@ -224,8 +218,6 @@ module Tolk
       result = Tolk::Phrase.paginate(:page => page,
         :conditions => { :'tolk_translations.locale_id' => self.id }.merge(conditions),
         :joins => :translations, :order => 'tolk_phrases.key ASC')
-
-      Tolk::Phrase.send :preload_associations, result, :translations
 
       result.each do |phrase|
         phrase.translation = phrase.translations.for(self)
