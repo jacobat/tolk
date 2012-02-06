@@ -19,7 +19,7 @@ module Tolk
 
     attr_accessor :translation
 
-    named_scope :containing_text, lambda { |query|
+    scope :containing_text, lambda { |query|
       { :conditions => ["tolk_phrases.key LIKE ?", "%#{query}%"] }
     }
   end
