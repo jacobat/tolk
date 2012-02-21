@@ -38,7 +38,7 @@ module Tolk
       'pt-PT' => 'Portuguese (Portugal)',
       'ro'    => 'Romanian',
       'ru'    => 'Russian',
-      'se'    => 'Swedish',
+      'sv-SE' => 'Swedish',
       'sk'    => 'Slovak',
       'sl'    => 'Slovenian',
       'sr'    => 'Serbian',
