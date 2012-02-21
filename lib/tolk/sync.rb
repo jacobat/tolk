@@ -67,7 +67,7 @@ module Tolk
       end
 
       def filter_out_i18n_keys(flat_hash)
-        flat_hash.reject { |key, value| key.starts_with? "i18n" }
+        flat_hash.reject { |key, value| key.starts_with?("i18n") || key.match(rails_default_translations_regex) }
       end
     end
   end

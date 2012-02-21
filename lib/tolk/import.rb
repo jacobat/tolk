@@ -15,7 +15,7 @@ module Tolk
 
       def import_locale(locale_name)
         locale = Tolk::Locale.find_or_create_by_name(locale_name)
-        data = locale.read_locale_file
+        data = locale.read_locale_files_without_defaults
 
         phrases = Tolk::Phrase.all
         count = 0
@@ -34,14 +34,35 @@ module Tolk
         puts "[INFO] Imported #{count} keys from #{locale_name}.yml"
       end
 
+      def rails_default_translations_regex
+        Regexp.new("^(#{rails_default_translations.join('|')})")
+      end
+
+      def rails_default_translations
+        %w(
+          activemodel.errors.template
+          activerecord.errors
+          date
+          datetime
+          errors
+          helpers
+          number
+          resource
+          support
+          time
+        )
+      end
     end
 
-    def read_locale_file
-      locale_file = "#{self.locales_config_path}/#{self.name}.yml"
-      raise "Locale file #{locale_file} does not exists" unless File.exists?(locale_file)
-
-      self.class.flat_hash(YAML::load(IO.read(locale_file))[self.name])
+    def read_locale_files_without_defaults
+      self.read_locale_files.reject{|k,v| k.match(self.class.rails_default_translations_regex) }
     end
 
+    def read_locale_files
+      Dir["#{self.locales_config_path}/**/*.yml"].inject({}) { |all_translations, file|
+        file_translations = self.class.flat_hash(YAML::load_file(file).fetch(self.name, {}))
+        all_translations.merge(file_translations)
+      }
+    end
   end
 end
