@@ -7,10 +7,10 @@ module Tolk
     module ClassMethods
 
       def import_secondary_locales
-        locales = Dir.entries(self.locales_config_path)
-        locales = locales.reject {|l| ['.', '..'].include?(l) || !l.ends_with?('.yml') }.map {|x| x.split('.').first } - [Tolk::Locale.primary_locale.name]
+        locale_names = Dir.entries(self.locales_config_path)
+        locale_names = locale_names.reject {|l| ['.', '..'].include?(l) || !l.ends_with?('.yml') }.map {|x| x.split('.').first } - [Tolk::Locale.primary_locale.name]
 
-        locales.each {|l| import_locale(l) }
+        locale_names.each {|l| import_locale(l) }
       end
 
       def import_locale(locale_name)
